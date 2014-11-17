@@ -1,0 +1,75 @@
+<div id="extractor-container">
+
+	<div class="common-containers">
+		<div>
+			Page List: <input type="button" value="Add Default Sources" id="add-default-sources" />
+		</div>
+		<table>
+			<thead>
+				<tr>
+					<th>Source ID</th><th>Source Name</th><th>Actions</th>
+				</tr>
+			</thead>
+			<tbody data-bind="foreach: sourceList">
+				<tr>
+					<td><input type="text" data-bind="value: id" /></td>
+					<td><input type="text" data-bind="value: name" /></td>
+					<td>
+						<input type="button" value="Remove" data-bind="click: $root.removeSource" /> 				
+					</td>
+				</tr>
+			</tbody>
+			<tfoot>
+				<tr>
+					<td colspan="10">
+						<input type="button" value="Add" data-bind="click: addSource" />
+					</td>
+				</tr>
+			</tfoot>
+		</table>
+	</div>
+	<br><br>
+	<div id="post-feed" class="common-containers" data-bind="visible: sourceList() && sourceList().length > 0">
+		<div>
+			<input type="button" id="extract-posts" value="Extract Posts"/>
+		</div>
+		<table id="post-feed-table">
+			<thead>
+				<tr>
+					<td>Link</td><td>Source</td><td>Name</td><td>Type</td><td>Message</td><td>Popularity</td><td>Thumb</td><td>Actions</td>
+				</tr>
+			</thead>
+			<tbody data-bind="foreach: postList">
+				<tr data-bind="attr: {'style': Number (popularity()) >= 1 ? 'background: #CDC9C9': 'background: #fafafa'">
+					<td>
+						<a data-bind="attr: {href: link()}" target="_blank">Open Link</a>
+					</td>
+					<td>
+						<a data-bind="attr: {href: source()}" target="_blank">View Source</a>
+					</td>
+					<td>
+						<input type="text" data-bind="value: name" />
+					</td>
+					<td>
+						<input type="text" data-bind="value: type" />
+					</td>
+					<td>
+						<textarea rows='5' cols='30' data-bind="value: message"></textarea>
+					</td>
+					<td>
+						<span data-bind="text: popularity"></span>
+					</td>
+					<td>
+						<div class="post-picture" data-bind="attr: {'style': 'background-image: url('+ picture() +')'}">
+						
+						</div>
+					</td>
+					<td>
+						<input type="button" value="schedule" data-bind="click: schedule" />
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	
+</div>
