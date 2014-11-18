@@ -52,11 +52,84 @@ define(["facebook"], function(){
 		this.popularity = ko.observable();
 		this.source = ko.observable();
 		this.picture = ko.observable();
+		this.hdVideoURL = ko.observable(); 
+		this.getHDVideoURL = ko.observable(true);
 		
 		this.schedule = function(){
-			console.log("Trying to schedule " + self.name());
+			console.log("trying to schedule " + self.name());
 			
+			if (self.type() === "video" && self.getHDVideoURL() === true){
+				console.log(" -- trying to get HD video url");
+				getHDVideoURL(self, function(){
+					
+					console.log("successfully retrieved HD url.. proceeding with schedule");
+				}, function(){
+					this.getHDVideoURL(false);
+					console.log("unable to get HD video url... click schedule again to go with sd version.");
+				});
+			} else {
+				console.log("proceeding to upload standard quality video/photo");
+				
+			} 
 		};
+	}
+	
+	function getHDVideoURL(model, successCallback, errorCallback){
+		$.ajax({
+			type: "GET",
+			url: model.link(),
+			success: function(data){
+				try {
+					var foundData = data.match(/\["params".*\]/)[0].match(/.*mp4/)[0];
+					foundData = foundData.substring(foundData.length - 50, foundData.length);
+					foundData = foundData.substring(foundData.indexOf("F")+1, foundData.length)
+					
+					console.log("found hd url for " + model.name());
+					console.log(foundData);
+					
+					var sdLink = model.source();
+					var hdLink = sdLink.substring(0, sdLink.lastIndexOf("/")+1) + foundData + sdLink.substring(sdLink.lastIndexOf("?"), sdLink.length);
+					
+					console.log ("SD link: \n" + sdLink );
+					console.log ("HD link: \n" + hdLink );
+					
+					model.hdVideoURL(hdLink);
+					if (successCallback)
+						successCallback();	
+				}catch(e){
+					console.log("Error while trying to get HD source...");
+					console.log(e);
+					if (errorCallback)
+						errorCallback();
+				}
+				
+			},
+			error: function(data){
+				console.log(data);
+				if (errorCallback)
+					errorCallback();
+			},
+			async: true
+		});
+	}
+	
+	function schedulePost(access_token, source, type, title, scheduled_publish_time){
+		$.ajax({
+			type: "POST",
+			data: {
+				access_token: access_token,
+				source: source,
+				title: title,
+				type: type,
+				scheduled_publish_time: scheduled_publish_time
+			},
+			success: function(data){
+				console.log(data)
+			},
+			error: function(data){
+				
+			}
+		});
 	}
 	
 	function Source(){
@@ -70,7 +143,7 @@ define(["facebook"], function(){
 		
 		self.getPostsFromFB = function(callback){
 			self.extractedPosts.removeAll();
-			FB.api(self.id() + "/posts?limit=50&fields=likes.limit(1).summary(true),type,message,name,link,picture,source", function(data){
+			FB.api(self.id() + "/posts?limit=10&fields=likes.limit(1).summary(true),type,message,name,link,picture,source", function(data){
 				data = data.data;
 				//populate extracted posts
 				for (var i=0;i<data.length;i++){
@@ -124,7 +197,8 @@ define(["facebook"], function(){
 	return {
 		Source: Source,
 		Extractor: Extractor,
-		setPageAccessToken: setPageAccessToken
+		setPageAccessToken: setPageAccessToken,
+		schedulePost: schedulePost
 	}
 	
 });

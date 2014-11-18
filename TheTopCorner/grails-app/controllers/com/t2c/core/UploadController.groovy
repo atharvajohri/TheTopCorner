@@ -1,13 +1,33 @@
 package com.t2c.core
 
+import grails.converters.JSON
+
+import com.restfb.BinaryAttachment
+import com.restfb.DefaultFacebookClient
+import com.restfb.FacebookClient
+import com.restfb.Parameter
+import com.restfb.types.FacebookType
+import com.restfb.types.Photo
+import com.restfb.types.Video
+
 class UploadController {
 
     def index() { 
 		
 	}
 	
-	def uploadToFacebook(){
-		/*log.info "*************************\nGot request to upload media\n${params}"
+	
+	/*
+	 * needs following params:
+	 * access_token
+	 * source
+	 * type (video/photo)
+	 * title
+	 * scheduled_publish_time
+	 */
+	def uploadMediaToFacebook(){
+		
+		log.info "*************************\nGot request to upload media\n${params}"
 		def responseJSON = [:]
 		
 		if (params.access_token && params.source){
@@ -33,7 +53,7 @@ class UploadController {
 				);
 			if (publishMessageResponse.id){
 				responseJSON.success = true
-				responseJSON.message = publishMessageResponse.id
+				responseJSON.message = publishMessageResponse.id			
 			}else{
 				responseJSON.success = false
 				responseJSON.message = "Video could not be uploaded"
@@ -49,6 +69,7 @@ class UploadController {
 			responseJSON.message = errmsg
 		}
 		
-		render responseJSON as JSON*/
+		render responseJSON as JSON
 	}
+	
 }

@@ -3,7 +3,9 @@ define(["models/theTopCorner/ExtractionModels", "facebook"], function(_extractio
 	var g_extractorModel,
 		g_postDataTable;
 	
-	var postAsPageId = "1444169292475774";
+//	var postAsPageId = "1444169292475774";
+	var postAsPageId = "1445630119047447";
+	
 	/*var g_defaultSources = [
 	    "266828596693072", "live.football.news", "345971365443086"
 	    "269501959740519", "179678092221501", "FootballHighlightsAndLiveScores"
@@ -38,7 +40,7 @@ define(["models/theTopCorner/ExtractionModels", "facebook"], function(_extractio
 				
 			} else {
 				console.log('Not connected to Facebook... Trying now.');
-				FB.login(checkFBLoginStatus, {scope: 'publish_actions, manage_pages', 'publish_stream'});
+				FB.login(checkFBLoginStatus, {scope: 'publish_actions, manage_pages, publish_stream'});
 			}
 		});		
 	}
