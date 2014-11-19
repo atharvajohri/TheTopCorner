@@ -1,5 +1,7 @@
 <div id="extractor-container">
-
+	<div class="floatR bold">
+		<a data-bind='attr: {href: scheduledPostsLink}' target='_blank'>See Scheduled Posts</a>
+	</div>
 	<div class="common-containers">
 		<div>
 			Page List: <input type="button" value="Add Default Sources" id="add-default-sources" />
@@ -70,6 +72,16 @@
 				</tr>
 			</tbody>
 		</table>
+	</div>
+	
+<!-- 	<div id="global-overlay" class="hide"></div> -->
+	<div id="time-scheduler-popup" class="hide">
+		<div class="popup-content">
+			<input id="datetimepicker" type="text" >
+			<br>			
+			<input type="button" id="submit-time-schedule" value="Schedule" />
+			<input type="button" id="cancel-time-schedule" value="Cancel" />
+		</div>
 	</div>
 	
 </div>

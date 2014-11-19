@@ -3,9 +3,6 @@ define(["models/theTopCorner/ExtractionModels", "facebook"], function(_extractio
 	var g_extractorModel,
 		g_postDataTable;
 	
-//	var postAsPageId = "1444169292475774";
-	var postAsPageId = "1445630119047447";
-	
 	/*var g_defaultSources = [
 	    "266828596693072", "live.football.news", "345971365443086"
 	    "269501959740519", "179678092221501", "FootballHighlightsAndLiveScores"
@@ -14,7 +11,7 @@ define(["models/theTopCorner/ExtractionModels", "facebook"], function(_extractio
 	var g_defaultSources = ["266828596693072"];
 	
 	function refreshGlobals(){
-		g_extractorModel = null;
+		g_extractorModel = new _extractionModels.Extractor();
 		FB_STATUS.connected = false;
 	}
 	
@@ -49,12 +46,12 @@ define(["models/theTopCorner/ExtractionModels", "facebook"], function(_extractio
 		FB.api( '/me/accounts', {scope:"manage_pages, publish_stream"}, function(response){
 			for (var i in response.data){
 				var pageAccessToken = null;
-				if (response.data[i].id.toString() === postAsPageId){
+				if (response.data[i].id.toString() === g_extractorModel.postForPageId()){
 					pageAccessToken = response.data[i].access_token;			
 					break;
 				}
 			}
-			_extractionModels.setPageAccessToken(pageAccessToken);
+			_extractionModels.setPageData(pageAccessToken, g_extractorModel.postForPageId());
 			
 			if (callback){
 				callback();
@@ -126,7 +123,6 @@ define(["models/theTopCorner/ExtractionModels", "facebook"], function(_extractio
 	}
 	
 	function setupBindings(){
-		g_extractorModel = new _extractionModels.Extractor(); 
 		ko.applyBindings(g_extractorModel, $("#extractor-container")[0]);
 	}
 	

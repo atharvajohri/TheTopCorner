@@ -2,9 +2,11 @@
 <html>
 	<head>
 		<title>The Top Corner</title>
-		<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,400,300,600' rel='stylesheet' type='text/css'>
-		<link href='css/main.css' rel='stylesheet' type='text/css'>
-		<link href="css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
+		<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,400,300,600' rel='stylesheet' type='text/css' />
+		<link href='css/main.css' rel='stylesheet' type='text/css' />
+		<link href='css/jquery-ui.min.css' rel='stylesheet' type='text/css' />
+		<link href="css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
+		<link href="css/jquery.datetimepicker.css" rel="stylesheet" type="text/css" />
 	</head>
 	<body>
 	
@@ -18,6 +20,8 @@
 		</div>
 		<script type="text/javascript" src='js/common/utils.js'></script>
 		<script type="text/javascript" src='js/frameworks/jquery.min.js'></script>
+		<script type="text/javascript" src='js/frameworks/jquery-ui.min.js'></script>
+		<script type="text/javascript" src='js/frameworks/jquery.datetimepicker.js'></script>
 		<script type="text/javascript" src='js/frameworks/knockout.js'></script>
 		<script type="text/javascript" src='js/frameworks/jquery.dataTables.min.js'></script>
 		<script type="text/javascript" src='js/frameworks/require.min.js'></script>
